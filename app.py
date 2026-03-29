@@ -39,15 +39,15 @@ if 'secret' not in st.session_state:
     st.session_state.nick = "RobSol"
 
 # --- INTERFEJS UŻYTKOWNIKA ---
-st.set_page_config(page_title="Master Mind - Skierniewice Ops", layout="centered", page_icon="🔐")
+st.set_page_config(page_title="Master Mind - Jeruzal", layout="centered", page_icon="🔐")
 
 # Boczny panel (Instrukcja i Admin)
 with st.sidebar:
     st.title("📖 Instrukcja misji")
     st.write("Twoim celem jest odgadnięcie tajnego kodu.")
     st.markdown("""
-    * **1** = Cyfra na **dobrym** miejscu.
-    * **0** = Cyfra w kodzie, ale na **złym** miejscu.
+    * **T** = Trafiona, cyfra na **dobrym** miejscu.
+    * **W** = Występuje, cyfra w kodzie, ale na **złym** miejscu.
     """)
     st.markdown("---")
     st.write("🔧 **Panel Serwisowy**")
@@ -65,10 +65,10 @@ st.title("🔐 Master Mind: Baza Skierniewice")
 # --- EKRAN STARTOWY ---
 if st.session_state.secret is None:
     with st.container():
-        st.session_state.nick = st.text_input("Podaj Nick Hakera:", st.session_state.nick, max_chars=15)
+        st.session_state.nick = st.text_input("Podaj Nick:", st.session_state.nick, max_chars=15)
         length = st.slider("Poziom zabezpieczeń (ilość cyfr):", 4, 10, 4)
         
-        if st.button("INICJUJ ŁAMANIE HASŁA", use_container_width=True):
+        if st.button("INICJUJ ŁAMANIE KODU", use_container_width=True):
             if not st.session_state.nick.strip():
                 st.error("Nick nie może być pusty!")
             else:
@@ -127,10 +127,10 @@ else:
 
     # Ekran Sukcesu
     if st.session_state.game_over:
-        st.success("HASŁO ZŁAMANE!")
+        st.success("KOD ZŁAMANY!")
         t_str = format_time_pl(st.session_state.duration)
         st.write(f"⏱ Czas: **{t_str}** | 📊 Liczba kroków: **{len(st.session_state.history)}**")
-        st.warning("Michał Boryta vel Stanisław Boryta: Wszystkie dane przejęte. Zapisano do crypto.log")
+        st.warning("Gratulacje! Kod odczytany! Ale myślę, że możesz jeszcze poprawić wynik! Pozdrawiam. Robert")
         
         if st.button("NOWA MISJA", use_container_width=True):
             st.session_state.secret = None
@@ -138,7 +138,7 @@ else:
 
 # --- GLOBALNY RANKING (Wyświetlany zawsze na dole) ---
 st.markdown("---")
-st.subheader("🏆 Top 10 Hakerów (Globalnie)")
+st.subheader("🏆 Top 10 Wyników (Globalnie)")
 if os.path.exists(SCORES_FILE):
     df_rank = pd.read_csv(SCORES_FILE)
     # Sortowanie premiuje trudność, potem małą ilość kroków, potem szybki czas
@@ -151,4 +151,4 @@ if os.path.exists(SCORES_FILE):
 else:
     st.info("Brak wpisów w bazie. Bądź pierwszym, który złamie system!")
 
-st.caption("© 2026 Robert S. | Skierniewice Ops | Wszelkie prawa zastrzeżone.")
+st.caption("© 2026 Robert S. | Jeruzal | Wszelkie prawa zastrzeżone.")

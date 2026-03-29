@@ -36,7 +36,7 @@ if 'secret' not in st.session_state:
     st.session_state.game_over = False
     st.session_state.start_time = 0
     st.session_state.duration = 0
-    st.session_state.nick = "RobSol"
+    st.session_state.nick = ""
 
 # --- INTERFEJS UŻYTKOWNIKA ---
 st.set_page_config(page_title="Master Mind - Jeruzal", layout="centered", page_icon="🔐")
@@ -60,7 +60,7 @@ with st.sidebar:
                 time.sleep(1)
                 st.rerun()
 
-st.title("🔐 Master Mind: Baza Skierniewice")
+st.title("🔐 Master Mind: Jeruzal")
 
 # --- EKRAN STARTOWY ---
 if st.session_state.secret is None:
@@ -96,7 +96,7 @@ else:
                 st.session_state.history.append({
                     "Lp.": len(st.session_state.history) + 1, 
                     "Kombinacja": user_guess, 
-                    "Wynik": f"1: {ones} | 0: {zeros}"
+                    "Wynik": f"T: {ones} | W: {zeros}"
                 })
                 
                 if ones == len(st.session_state.secret):
